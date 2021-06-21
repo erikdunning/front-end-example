@@ -47,6 +47,12 @@ I have a couple other thoughts about things that could be improved in this examp
 
 In the project directory, you can run:
 
+### `yarn install`
+
+This will install the dependencies bundled with the repo for speed and deployment safety (in the event of a network outage).
+
+Be sure to have yarn and Node.js v16 installed! (ideally using NVM)
+
 ### `yarn start`
 
 Runs the app in the development mode.\
