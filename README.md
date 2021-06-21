@@ -2,15 +2,35 @@
 
 This is an example front end SPA which was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+It automatically builds using GitHub Actions and publishes itself to the `gh-pages` branch for CI purposes.
+
+The example app itself has a very simple Material UI implementation that groups the list items by `listId` into collapsible sub-lists.
+
+View it here: https://erikdunning.github.io/front-end-example/
+
 ## General Notes
 
-The application structure should be pretty easy to follow. Common features for this light application are grouped into folders that describe their function in the application.
+The application structure should be pretty easy to follow.
+Common features for this light application are grouped into folders that describe their function in the application.
 
-They are:
-- `api`
-- `components`
-- `hooks`
-- `types`
+They are as follows:
+- `src/api` - For an indexed collection of API methods and associated processing helpers that may be selectively exported.
+- `src/components` - Contains the custom React components required by the application.
+- `src/hooks` - Contains React hooks used to organize common functional behavior.
+- `src/types` - Contains common TypeScript definitons.
+
+For deployment management, there are two important files:
+- `.github/workflows/ci.yml` - The singular GitHub Actions workflow for this example.
+- `scripts/deploy-gh-pages.sh` - A simple script called by the GH Actions to manage the deployment of the `gh-pages` branch.  
+
+### Testing / Linting Notes
+- While Jest is used, testing does not presently use more advanced libraries like Enzyme, and I've only assembled one test as a smoke test.
+- Additionally, eslint & prettier are present for linting and formatting, but are just using the boilerplate models presently.
+
+### Build Assets
+- Thankfully TypeScript makes all the JS nicities easy to use and the rendered assets on the `gh-pages` branch are automatically
+  chunked for load time efficiency.
+- More advanced build and hosting solutions for a real project would require additional thought, but this serves an illustrative purpose.
 
 ## Available Scripts
 
