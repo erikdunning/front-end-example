@@ -2,6 +2,7 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches:
       - main
@@ -9,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build & Draft Release
+    name: Build & Publish GH-Pages Branch
     steps:
     - uses: actions/checkout@v2
     - name: Read .nvmrc
@@ -22,3 +23,8 @@ jobs:
       run: yarn install
     - name: Build
       run: yarn build
+    - name: Publish
+      env:
+        GH_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+        REPOSITORY_NAME: ${{ github.event.repository.name }}
+      run: bash scripts/deploy-gh-pages.sh
