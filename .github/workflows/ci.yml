@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build & Draft Release
+    steps:
+    - uses: actions/checkout@v2
+    - name: Read .nvmrc
+      run: echo "::set-output name=NODE_VERSION::$(cat .nvmrc)"
+      id: node-read-version
+    - uses: actions/setup-node@v2.1.5
+      with:
+        node-version: "${{ steps.node-read-version.outputs.NODE_VERSION }}"
+    - name: Install
+      run: yarn install
+    - name: Build
+      run: yarn build
