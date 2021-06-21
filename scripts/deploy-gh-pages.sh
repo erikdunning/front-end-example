@@ -18,9 +18,10 @@ setup_tmp_environment() {
   cd $tmpdir
   mkdir $repo
   cd $repo
-  git init
+  git init --quiet --initial-branch=${branch}
+  git config --global user.name "Erik Dunning - CI"
   git config --global user.email "erikdunning@gmail.com"
-  git remote add origin ${GH_TOKEN}@github.com:erikdunning/${repo}.git
+  git remote add origin "https://erikdunning:${GH_TOKEN}@github.com/erikdunning/${repo}.git"
   
   # Copy Down Build Files
   cd $home

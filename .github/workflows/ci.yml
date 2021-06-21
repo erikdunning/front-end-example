@@ -21,6 +21,10 @@ jobs:
         node-version: "${{ steps.node-read-version.outputs.NODE_VERSION }}"
     - name: Install
       run: yarn install
+    - name: Lint
+      run: yarn lint
+    - name: Test
+      run: yarn test --watchAll=false
     - name: Build
       run: yarn build
     - name: Publish
