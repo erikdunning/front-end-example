@@ -14,11 +14,13 @@ export const ItemList = React.memo(({ items }: { items: Item[] }) => {
   // the componenet is rendered.
   const handleClick = useCallback(
     (event: MouseEvent) => {
+
       // Retrieve the listId stored on the element itself
       // (this allows us to have one function respond to N elements rather than having N fucntion bindings.)
       const listId = parseInt(
         event.currentTarget.getAttribute("data-list-id") || ""
       );
+
       // Filter out the id if it currently exists in the "open" list, otherwise append it
       if (listId) {
         if (open.includes(listId)) {
@@ -32,7 +34,7 @@ export const ItemList = React.memo(({ items }: { items: Item[] }) => {
   );
 
   // ListItem ReactElements for each item are grouped together by corresponding
-  // listId following the natural order they appear in the input.
+  // listId following the natural order they appear in.
   const listItems: { [key: number]: ReactElement[] } = {};
   items.forEach((item: Item, index: number) => {
     if (!(item.listId in listItems)) {

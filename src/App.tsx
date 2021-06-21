@@ -27,6 +27,7 @@ function App() {
           color="textPrimary"
           component="h1"
           gutterBottom
+          style={{ marginTop: "2rem" }}
         >
           Front-End Example
         </Typography>
