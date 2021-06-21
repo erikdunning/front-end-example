@@ -26,11 +26,22 @@ For deployment management, there are two important files:
 ### Testing / Linting Notes
 - While Jest is used, testing does not presently use more advanced libraries like Enzyme, and I've only assembled one test as a smoke test.
 - Additionally, eslint & prettier are present for linting and formatting, but are just using the boilerplate models presently.
+- Ideally, real integration testing using Cypress.io or Sauce Labs (or any other browser testing provider / solution) would be
+  added to ensure other related infrastructure is working and browser specific breakages would be caught more easily.
 
 ### Build Assets
 - Thankfully TypeScript makes all the JS nicities easy to use and the rendered assets on the `gh-pages` branch are automatically
   chunked for load time efficiency.
 - More advanced build and hosting solutions for a real project would require additional thought, but this serves an illustrative purpose.
+- CloudFront / other CDN provided solutions should be considered for mass deployment of build assets, but hosting them in S3
+  or other simple storage mechanisms behind the company DNS is also a totally valid option for services with light customer volume.
+
+### Further Improvements
+I have a couple other thoughts about things that could be improved in this example depending on the business needs:
+- Using `localStorage` or `sessionStorage` to cache the items may or may not be advisable for a real world scenario.
+- Additionally, the API used to render the item response could cache items internally with memcache, elasticache, or redis
+  or many other forms of caching strategies.  Presently the S3 bucket sets the `no-cache` header to explicitly prevent the
+  browser from caching it automatically, but the manual approach would work.
 
 ## Available Scripts
 
@@ -46,8 +57,7 @@ You will also see any lint errors in the console.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner in the interactive watch mode.
 
 ### `yarn build`
 
@@ -55,22 +65,7 @@ Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `yarn lint`
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Lints the project.
