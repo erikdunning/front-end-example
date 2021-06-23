@@ -12,32 +12,36 @@ export async function listItems(url: string): Promise<Item[]> {
 // Sorts the list if items by listId and then their name using a memory inefficient, but
 // simple to follow sorting mechanism.
 function sortItemsByListIdThenName(items: Item[]) {
-
-  // A temporary object structure to represent the unique set of listIds and names.
-  const sortedItems: {
-    computedName: string;
-    item: Item;
-  }[] = [];
+  // A temporary object structure to represent the unique set of listIds and items.
+  const sortedLists: { [key: number]: Item[] } = [];
 
   // Compute the properties for the object.
   for (const item of items) {
-    sortedItems.push({
-      computedName: `${item.listId}${item.name}`,
-      item,
-    });
+    if (sortedLists[item.listId]) {
+      sortedLists[item.listId].push(item);
+    } else {
+      sortedLists[item.listId] = [item];
+    }
   }
 
   // Sort the array of objects using the computedName to give a natural sorting order
   // while respecting both values, in order.
-  sortedItems.sort((a, b) =>
-    a.computedName < b.computedName
-      ? -1
-      : a.computedName > b.computedName
-      ? 1
-      : 0
-  );
+  let sortedItems: Item[] = [];
+  const listIds: string[] = Object.keys(sortedLists).sort();
+  listIds.forEach((listId) => {
+    const sortedList = sortedLists[parseInt(listId)];
+    sortedItems = sortedItems.concat(
+      sortedList.sort((a, b) => {
+        return (a.id < b.id)
+          ? -1
+          : (a.id > b.id)
+          ? 1
+          : 0
+      })
+    );
+  });
 
-  return sortedItems.map((item) => item.item);
+  return sortedItems;
 }
 
 // Removes items by examining the name field and excluding those with "" or null values.
